@@ -11,17 +11,17 @@ char playerTokenPlacement[43] = {'o', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O
 void board();
 int checkwin();
 
-const numberOfslotsInOneRow = 7;
-const int yes = 0; 
-const int no = 1;
-const firstSlot = 1;
-const lastSlot = 42;
+const int numberOfslotsInOneRow = 7;
+const int yes = 1;   // making the code readable
+const int no  = 0;   // making the code readable
+const int firstSlot = 1;
+const int lastSlot = 42;
 
 int shouldGameContinue = yes;
 int player = 1;
 
 int main() {
-    const firstSlotRow = 1;
+    const int firstSlotRow = 1;
 
     board();
     while(shouldGameContinue == yes) {

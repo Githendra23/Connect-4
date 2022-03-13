@@ -3,7 +3,7 @@
 This is a simple Connect 4 game coded in C language. 
 
 My version of the game has colours for each player 
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 GENERAL USE NOTES
 -----------------

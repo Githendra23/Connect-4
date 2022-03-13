@@ -35,7 +35,8 @@ int main() {
             scanf("%d", &choice);
             getchar();
 
-            for(int x = firstSlotRow; x <= numberOfslotsInOneRow + 1; x++) { // if 
+/* ---------- verifying player's answer ---------- */
+            for(int x = firstSlotRow; x <= numberOfslotsInOneRow + 1; x++) {
                 if(x == 8) {
                     board();
                     printf("\nType a number between 1 and 7\n");
@@ -45,7 +46,7 @@ int main() {
                 else {
                     if(choice == x) {
                         if(column[x + (7 * 0)] != 'O' && column[x + (7 * 1)] != 'O' && column[x + (7 * 2)] != 'O' && column[x + (7 * 3)] != 'O' &&
-                           column[x + (7 * 4)] != 'O' && column[x + (7 * 5)] != 'O' && column[x + (7 * 6)] != 'O') { // if vertical columns are all filled
+                           column[x + (7 * 4)] != 'O' && column[x + (7 * 5)] != 'O' && column[x + (7 * 6)] != 'O') { // if a column is all filled
                             board();
                             printf("\nthose slots are full, pick another slot\n");
                             shouldSkip = yes;
@@ -82,8 +83,8 @@ int main() {
                 checkwin();
                 player++;
             }
-        } // while(infiniteLoop == yes)
-    } // while(shouldGameContinue == yes)
+        }
+    }
     printf("\nPress Any Key to Exit...\n");  
     getch();
 }
@@ -138,7 +139,7 @@ int checkwin() {
         }
     }
 
-    for(token = 1; token <= 18; token++) { // cross
+    for(token = 1; token <= 18; token++) { // diagonal left
         if(token == 2 || (token >= 5 && token <= 7) || token == 10 || (token >= 12 && token <= 14)) {}
         else {
             if((playerTokenPlacement[token + (8 * 0)] == '1' && playerTokenPlacement[token + (8 * 1)] == '1'  && 
@@ -152,7 +153,7 @@ int checkwin() {
         }
     }
 
-    for(token = 4; token <= 21; token++) { // cross
+    for(token = 4; token <= 21; token++) { // diagonal right
         if((token >= 8 && token <= 10) || (token >= 15 && token <= 17)) {}
         else {
             if((playerTokenPlacement[token + (6 * 0)] == '1' && playerTokenPlacement[token + (6 * 1)] == '1'  && 

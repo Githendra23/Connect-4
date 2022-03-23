@@ -11,17 +11,20 @@ char playerTokenPlacement[43] = {'o', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O
                                  'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O'}; // save the placement of the player's token
 
 void board();
-int checkwin();
+void checkwin();
 
 const int numberOfslotsInOneRow = 7;
 const int yes = 1;   // making the code readable
 const int no  = 0;   // making the code readable
+const int firstSlot = 1;
+const int lastSlot = 42;
 
 int shouldGameContinue = yes;
 int player = 1;
+int isDraw = no;
 
 int main() {
-    const int firstSlotRow = 1;
+    const int firstSlotRow = firstSlot;
 
     board();
     while(shouldGameContinue == yes) {
@@ -36,7 +39,7 @@ int main() {
 
 /* ---------- verifying player's answer ---------- */
             for(int slotRow = firstSlotRow; slotRow <= numberOfslotsInOneRow + 1; slotRow++) {
-                if(slotRow == 8) {
+                if(slotRow == numberOfslotsInOneRow + 1) {
                     board();
                     printf("\nType a number between 1 and 7\n");
                     shouldSkip = yes;
@@ -84,12 +87,15 @@ int main() {
             }
         }
     }
+    if(isDraw == yes) {
+        printf("\nIt's a draw !\n");
+    }
+    else {
+        printf("\nPlayer %d is the winner !\n", ((player % 2) != 0) ? 2 : 1); // != because of line 86
+    }
     printf("\nPress Any Key to Exit...\n");  
     getch();
 }
-
-const int firstSlot = 1;
-const int lastSlot = 42;
 
 void board() {
     system("cls"); // clear terminal
@@ -111,41 +117,37 @@ void board() {
     }
 }
 
-int checkwin() {
-    int playersTurn = ((player % 2) == 0) ? 2 : 1;
+void checkwin() {
     int checkAnswer = ((player % 2) == 0) ? '2' : '1';
     int token;
 
-    for(token = 1; token <= 21; token++) { // vertical
+    for(token = firstSlot; token <= 21; token++) { // vertical
         if((playerTokenPlacement[token + (7 * 0)] == checkAnswer && playerTokenPlacement[token + (7 * 1)] == checkAnswer  && 
             playerTokenPlacement[token + (7 * 2)] == checkAnswer && playerTokenPlacement[token + (7 * 3)] == checkAnswer)) {
-                printf("\nPlayer %d is the winner !\n", playersTurn);
                 shouldGameContinue = no;
-                break;
+                return;
         }
     }
 
-    for(token = 1; token <= 39; token++) { // horizontal
+    for(token = firstSlot; token <= 39; token++) { // horizontal
         if((token >= 5 && token <= 8) || (token >= 12 && token <= 14) || (token >= 19 && token <= 21) ||
            (token >= 26 && token <= 28) || (token >= 33 && token <= 34)) {} // skip these numbers 
         else {
             if((playerTokenPlacement[token + 0] == checkAnswer && playerTokenPlacement[token + 1] == checkAnswer  && 
                 playerTokenPlacement[token + 2] == checkAnswer && playerTokenPlacement[token + 3] == checkAnswer)) {
-                printf("\nPlayer %d is the winner !\n", playersTurn);
                 shouldGameContinue = no;
-                break;
+                return;
             }
         }
     }
 
-    for(token = 1; token <= 18; token++) { // diagonal left
+    for(token = firstSlot; token <= 18; token++) { // diagonal left
         if(token == 2 || (token >= 5 && token <= 7) || token == 10 || (token >= 12 && token <= 14)) {} // skip these numbers 
         else {
             if((playerTokenPlacement[token + (8 * 0)] == checkAnswer && playerTokenPlacement[token + (8 * 1)] == checkAnswer  && 
                 playerTokenPlacement[token + (8 * 2)] == checkAnswer && playerTokenPlacement[token + (8 * 3)] == checkAnswer)) {
-                    printf("\nPlayer %d is the winner !\n", playersTurn);
                     shouldGameContinue = no;
-                    break;
+                    return;
             }
         }
     }
@@ -155,9 +157,8 @@ int checkwin() {
         else {
             if((playerTokenPlacement[token + (6 * 0)] == checkAnswer && playerTokenPlacement[token + (6 * 1)] == checkAnswer  && 
                 playerTokenPlacement[token + (6 * 2)] == checkAnswer && playerTokenPlacement[token + (6 * 3)] == checkAnswer)) {
-                    printf("\nPlayer %d is the winner !\n", playersTurn);
                     shouldGameContinue = no;
-                    break;
+                    return;
             }
         }
     }
@@ -166,8 +167,10 @@ int checkwin() {
     for(token = firstSlot; token <= lastSlot; token++) {
         if(column[token] != 'O') count++;
         if(count >= lastSlot) {
-            printf("\nIt's a draw !\n");
+            
+            isDraw = yes;
             shouldGameContinue = no;
+            return;
         }
     }
 }

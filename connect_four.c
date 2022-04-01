@@ -47,8 +47,7 @@ int main() {
                 }
                 else {
                     if(choice == slotRow) {
-                        if(column[slotRow + (7 * 0)] != 'O' && column[slotRow + (7 * 1)] != 'O' && column[slotRow + (7 * 2)] != 'O' && column[slotRow + (7 * 3)] != 'O' &&
-                           column[slotRow + (7 * 4)] != 'O' && column[slotRow + (7 * 5)] != 'O' && column[slotRow + (7 * 6)] != 'O') { // if a column is all filled
+                        if(column[slotRow + (7 * 0)] != 'O') { // if the first slot is full it means that the whole column is full
                             board();
                             printf("\nthose slots are full, pick another slot\n");
                             shouldSkip = yes;
@@ -68,10 +67,7 @@ int main() {
                         for(int j = 1; j <= 6; j++) {
                             if(column[slot] == 'O') {
                                 column[slot] = '0';
-
-                                if(playersTurn == 1) playerTokenPlacement[slot] = '1';
-                                else playerTokenPlacement[slot] = '2';
-
+                                playerTokenPlacement[slot] = ((player % 2) == 0) ? '2' : '1';
                                 infiniteLoop = no;
                                 break;
                             }
@@ -91,7 +87,7 @@ int main() {
         printf("\nIt's a draw !\n");
     }
     else {
-        printf("\nPlayer %d is the winner !\n", ((player % 2) != 0) ? 2 : 1); // != because of line 86
+        printf("\nPlayer %d is the winner !\n", ((player % 2) != 0) ? 2 : 1);
     }
     printf("\nPress Any Key to Exit...\n");  
     getch();
@@ -129,7 +125,7 @@ void checkwin() {
         }
     }
 
-    for(token = firstSlot; token <= 39; token++) { // horizontal
+    for(token = 5; token <= 34; token++) { // horizontal
         if((token >= 5 && token <= 8) || (token >= 12 && token <= 14) || (token >= 19 && token <= 21) ||
            (token >= 26 && token <= 28) || (token >= 33 && token <= 34)) {} // skip these numbers 
         else {
@@ -141,33 +137,30 @@ void checkwin() {
         }
     }
 
-    for(token = firstSlot; token <= 18; token++) { // diagonal left
-        if(token == 2 || (token >= 5 && token <= 7) || token == 10 || (token >= 12 && token <= 14)) {} // skip these numbers 
-        else {
+    for(token = 1; token <= 18; token++) { // diagonal left
+        if((token >= 1 && token <= 4) || (token >= 8 && token <= 11) || (token >= 15 && token <= 18)) {
             if((playerTokenPlacement[token + (8 * 0)] == checkAnswer && playerTokenPlacement[token + (8 * 1)] == checkAnswer  && 
                 playerTokenPlacement[token + (8 * 2)] == checkAnswer && playerTokenPlacement[token + (8 * 3)] == checkAnswer)) {
                     shouldGameContinue = no;
                     return;
             }
-        }
+        } // skip these numbers 
     }
 
     for(token = 4; token <= 21; token++) { // diagonal right
-        if((token >= 8 && token <= 10) || (token >= 15 && token <= 17)) {} // skip these numbers 
-        else {
+        if((token >= 4 && token <= 7) || (token >= 11 && token <= 14) || (token >= 18 && token <= 21)) {
             if((playerTokenPlacement[token + (6 * 0)] == checkAnswer && playerTokenPlacement[token + (6 * 1)] == checkAnswer  && 
                 playerTokenPlacement[token + (6 * 2)] == checkAnswer && playerTokenPlacement[token + (6 * 3)] == checkAnswer)) {
                     shouldGameContinue = no;
                     return;
             }
-        }
+        } // skip these numbers 
     }
 
-    int count = 0;
-    for(token = firstSlot; token <= lastSlot; token++) {
-        if(column[token] != 'O') count++;
-        if(count >= lastSlot) {
-            
+    int topSlots = 0;
+    for(token = firstSlot; token <= numberOfslotsInOneRow; token++) {
+        if(column[token] != 'O') topSlots++;
+        if(topSlots == numberOfslotsInOneRow) {  
             isDraw = yes;
             shouldGameContinue = no;
             return;

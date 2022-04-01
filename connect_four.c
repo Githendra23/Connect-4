@@ -125,19 +125,18 @@ void checkwin() {
         }
     }
 
-    for(token = 5; token <= 34; token++) { // horizontal
-        if((token >= 5 && token <= 8) || (token >= 12 && token <= 14) || (token >= 19 && token <= 21) ||
-           (token >= 26 && token <= 28) || (token >= 33 && token <= 34)) {} // skip these numbers 
-        else {
+    for(token = firstSlot; token <= 39; token++) { // horizontal
+        if((token >= 1 && token <= 4) || (token >= 8 && token <= 11) || (token >= 15 && token <= 18) ||
+           (token >= 22 && token <= 32) || (token >= 36 && token <= 39)) {
             if((playerTokenPlacement[token + 0] == checkAnswer && playerTokenPlacement[token + 1] == checkAnswer  && 
                 playerTokenPlacement[token + 2] == checkAnswer && playerTokenPlacement[token + 3] == checkAnswer)) {
-                shouldGameContinue = no;
-                return;
+                    shouldGameContinue = no;
+                    return;
             }
-        }
+        } // skip these numbers 
     }
 
-    for(token = 1; token <= 18; token++) { // diagonal left
+    for(token = firstSlot; token <= 18; token++) { // diagonal left
         if((token >= 1 && token <= 4) || (token >= 8 && token <= 11) || (token >= 15 && token <= 18)) {
             if((playerTokenPlacement[token + (8 * 0)] == checkAnswer && playerTokenPlacement[token + (8 * 1)] == checkAnswer  && 
                 playerTokenPlacement[token + (8 * 2)] == checkAnswer && playerTokenPlacement[token + (8 * 3)] == checkAnswer)) {

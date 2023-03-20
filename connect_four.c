@@ -2,20 +2,16 @@
 #include <stdlib.h>
 #include <conio.h> // this library doesnt exist on linux
 
-char column[43] = {'o', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O',
-                   'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O',
-                   'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O'};
+char column[43];
 
-char playerTokenPlacement[43] = {'o', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O',
-                                 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O',
-                                 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O'}; // save the placement of the player's token
+char playerTokenPlacement[43]; // save the placement of the player's token
 
 void board();
 void checkwin();
 
 const int numberOfslotsInOneRow = 7;
-const int yes = 1;   // making the code readable
-const int no  = 0;   // making the code readable
+const int yes = 1;
+const int no  = 0;
 const int firstSlot = 1;
 const int lastSlot = 42;
 
@@ -26,6 +22,11 @@ int isDraw = no;
 int main() {
     const int firstSlotRow = firstSlot;
 
+    for(int i = 0; i < 43; i++) {
+        column[i] = 'O';
+        playerTokenPlacement[i] = 'O';
+    }
+
     board();
     while(shouldGameContinue == yes) {
         int choice;
@@ -35,7 +36,7 @@ int main() {
         while(infiniteLoop == yes) {
             int shouldSkip = no;  
             printf("\nplayer %d enter a number: ", playersTurn);
-            scanf("%d", &choice);
+            choice = getche() - 48;
 
 /* ---------- verifying player's answer ---------- */
             for(int slotRow = firstSlotRow; slotRow <= numberOfslotsInOneRow + 1; slotRow++) {
